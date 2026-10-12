@@ -42,7 +42,7 @@
   networking.interfaces.ens18 = {
     useDHCP = false;
     ipv4.addresses = [{
-      address = "192.168.1.77";
+      address = "192.168.1.78";
       prefixLength = 24;
     }];
   };

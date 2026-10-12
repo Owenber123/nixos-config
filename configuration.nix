@@ -57,6 +57,23 @@
   # Pairs with discard=on on the Proxmox disk
   services.fstrim.enable = true;
 
+  # Many worktrees × file watchers × test runners
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = 1048576;
+    "fs.inotify.max_user_instances" = 8192;
+    "fs.file-max" = 2097152;
+  };
+  security.pam.loginLimits = [
+    { domain = "*"; type = "-"; item = "nofile"; value = "1048576"; }
+  ];
+
+  # Degrade under memory pressure instead of hard-hanging
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+  services.earlyoom.enable = true;
+
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     fastfetch

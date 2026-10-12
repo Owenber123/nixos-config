@@ -19,12 +19,20 @@
     enable = true;
     settings = {
       PermitRootLogin = "no";
+      PasswordAuthentication = false;
     };
   };
 
   users.users.bloq = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];          # sudo access
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTRzdUc4MBuipHrU1Q9PLHafF8e9GrBoWkCZcuJhzVN beringer.owen@gmail.com" ];
+  };
+
+  # Runs the agent fleet; deliberately not in wheel
+  users.users.fleet = {
+    isNormalUser = true;
+    linger = true;                      # tmux sessions survive logout
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTRzdUc4MBuipHrU1Q9PLHafF8e9GrBoWkCZcuJhzVN beringer.owen@gmail.com" ];
   };
 

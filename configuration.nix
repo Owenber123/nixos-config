@@ -1,4 +1,4 @@
-{ config, pkgs, llm-agents, ... }:
+{ config, pkgs, llm-agents, treehouse, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -112,10 +112,39 @@
     unzip
     tree-sitter
 
-    claude-code
+    # CLI tools agents reach for
+    jq
+    yq-go
+    wget
+    tree
+    htop
+    python3
+    go
+
+    # Agent fleet (firstmate)
+    llm-agents.packages.x86_64-linux.claude-code
+    treehouse.packages.x86_64-linux.treehouse
 
     #llm-agents.packages.x86_64-linux.herdr
   ];
+
+  # Nix manages claude-code updates
+  environment.variables.DISABLE_AUTOUPDATER = "1";
+
+  # Run prebuilt binaries (npm postinstall, release downloads, etc.)
+  programs.nix-ld.enable = true;
+
+  # Per-worktree toolchains from project flakes
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
+  # Rootless containers; safer than the docker group
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
   system.stateVersion = "26.05";
 }

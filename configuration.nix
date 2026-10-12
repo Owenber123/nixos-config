@@ -44,7 +44,18 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     trusted-users = [ "root" "bloq" ];
+    auto-optimise-store = true;
   };
+
+  # Agents + devshells fill the store fast
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  # Pairs with discard=on on the Proxmox disk
+  services.fstrim.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [

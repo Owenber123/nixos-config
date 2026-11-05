@@ -1,0 +1,18 @@
+# sops-nix: which age keys can decrypt which secrets files.
+# No real keys or secrets are committed yet. See README.md for how to
+# generate these keys, then uncomment and fill in.
+keys:
+  # Your personal (admin) age key, from `age-keygen -y ~/.config/sops/age/keys.txt`
+  # - &admin_bloq age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # Host keys, from `ssh-keyscan <host> | ssh-to-age`
+  # - &dev1 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # - &dev2 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # - &prod1 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # - &prod2 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+creation_rules: []
+  # - path_regex: secrets/dev\.yaml$
+  #   key_groups:
+  #     - age: [*admin_bloq, *dev1, *dev2]
+  # - path_regex: secrets/prod\.yaml$
+  #   key_groups:
+  #     - age: [*admin_bloq, *prod1, *prod2]
